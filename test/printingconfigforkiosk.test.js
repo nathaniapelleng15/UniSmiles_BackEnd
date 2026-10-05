@@ -1,0 +1,1 @@
+printingConfigForKiosk.test.js

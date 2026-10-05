@@ -1,0 +1,1 @@
+emailConfig.test.js

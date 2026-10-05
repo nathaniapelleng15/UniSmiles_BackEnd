@@ -1,0 +1,103 @@
+[10:28:18] Checking out branch "main"...
+[10:28:18] Git sync completed successfully.
+[10:28:18] VCS Sync completed successfully.
+[10:28:18] Target runtime server: Minibox server, Minibox 2 server
+[10:28:18] Configuring environment and PM2 worker process...
+[10:28:20] Application listening port configured automatically.
+[10:29:05] Application service active across worker instances.
+[10:29:05] Generating web server routing configuration...
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'admincontroller.js' -> 'adminController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'assetcontroller.js' -> 'assetController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'authcontroller.js' -> 'authController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'dashboardcontroller.js' -> 'dashboardController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'downloadcontroller.js' -> 'downloadController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'filtercontroller.js' -> 'filterController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'frametemplatecontroller.js' -> 'frameTemplateController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'gesturecontroller.js' -> 'gestureController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'kioskcontroller.js' -> 'kioskController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'paymentcontroller.js' -> 'paymentController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'paymentverificationcontroller.js' -> 'paymentVerificationController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'photocontroller.js' -> 'photoController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printcontroller.js' -> 'printController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printjobcontroller.js' -> 'printJobController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printingconfigcontroller.js' -> 'printingConfigController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'sessioncontroller.js' -> 'sessionController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'systemsettingscontroller.js' -> 'systemSettingsController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'usercontroller.js' -> 'userController.js' in 'controllers/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'apikeymiddleware.js' -> 'apiKeyMiddleware.js' in 'middlewares/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'assetuploadmiddleware.js' -> 'assetUploadMiddleware.js' in 'middlewares/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'authmiddleware.js' -> 'authMiddleware.js' in 'middlewares/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'errorhandler.js' -> 'errorHandler.js' in 'middlewares/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'kioskauthmiddleware.js' -> 'kioskAuthMiddleware.js' in 'middlewares/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'uploadmiddleware.js' -> 'uploadMiddleware.js' in 'middlewares/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'auditlogmodel.js' -> 'auditLogModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'frametemplatemodel.js' -> 'frameTemplateModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'kioskmodel.js' -> 'kioskModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'kioskprintingconfigmodel.js' -> 'kioskPrintingConfigModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'paymentprofilemodel.js' -> 'paymentProfileModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'paymentverificationmodel.js' -> 'paymentVerificationModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'photomodel.js' -> 'photoModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printjobmodel.js' -> 'printJobModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printmodel.js' -> 'printModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'sessionmodel.js' -> 'sessionModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'systemsettingmodel.js' -> 'systemSettingModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'transactionmodel.js' -> 'transactionModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'usermodel.js' -> 'userModel.js' in 'models/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'adminroutes.js' -> 'adminRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'assetroutes.js' -> 'assetRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'authroutes.js' -> 'authRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'dashboardroutes.js' -> 'dashboardRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'filterroutes.js' -> 'filterRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'frametemplateroutes.js' -> 'frameTemplateRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'gestureroutes.js' -> 'gestureRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'kioskroutes.js' -> 'kioskRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'photoroutes.js' -> 'photoRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printroutes.js' -> 'printRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'publicroutes.js' -> 'publicRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'sessionroutes.js' -> 'sessionRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'userroutes.js' -> 'userRoutes.js' in 'routes/v1/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'cleanupservice.js' -> 'cleanupService.js' in 'services/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'gopaymerchantfeed.js' -> 'gopayMerchantFeed.js' in 'services/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'gopaymerchantpoller.js' -> 'gopayMerchantPoller.js' in 'services/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printjobservice.js' -> 'printJobService.js' in 'services/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'assetrouteorder.test.js' -> 'assetRouteOrder.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'assetupload.test.js' -> 'assetUpload.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'controllerimports.test.js' -> 'controllerImports.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'emailconfig.test.js' -> 'emailConfig.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'evidencearchiveresilience.test.js' -> 'evidenceArchiveResilience.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'kioskendpointsmoke.test.js' -> 'kioskEndpointSmoke.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'labelpresetmargin.test.js' -> 'labelPresetMargin.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'paymentattemptlimit.test.js' -> 'paymentAttemptLimit.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'paymentdecision.test.js' -> 'paymentDecision.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'paymenttoggle.test.js' -> 'paymentToggle.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'photoadjustmentflow.test.js' -> 'photoAdjustmentFlow.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printcalibration.test.js' -> 'printCalibration.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printcalibrationmigration.test.js' -> 'printCalibrationMigration.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printjob.test.js' -> 'printJob.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printerstatusflow.test.js' -> 'printerStatusFlow.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printingconfigforkiosk.test.js' -> 'printingConfigForKiosk.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printingconfigvalidation.test.js' -> 'printingConfigValidation.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'scannotblocked.test.js' -> 'scanNotBlocked.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'schemaautoincrement.test.js' -> 'schemaAutoIncrement.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'thermalpaper.test.js' -> 'thermalPaper.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'tombollayar.test.js' -> 'tombolLayar.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'trustproxy.test.js' -> 'trustProxy.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'uploadfolderpermissions.test.js' -> 'uploadFolderPermissions.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'uploadpaths.test.js' -> 'uploadPaths.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'visionclient.test.js' -> 'visionClient.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'visionhealth.test.js' -> 'visionHealth.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'visionportfallback.test.js' -> 'visionPortFallback.test.js' in 'test/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'imagevalidation.js' -> 'imageValidation.js' in 'utils/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'papersizes.js' -> 'paperSizes.js' in 'utils/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'paymentdecision.js' -> 'paymentDecision.js' in 'utils/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printjoblifecycle.js' -> 'printJobLifecycle.js' in 'utils/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printvalidation.js' -> 'printValidation.js' in 'utils/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'printingconfigvalidation.js' -> 'printingConfigValidation.js' in 'utils/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'socketserver.js' -> 'socketServer.js' in 'utils/'.
+[10:29:05] ✓ Auto-Correction: Created lowercase asset file symlink 'visionclient.js' -> 'visionClient.js' in 'utils/'.
+[10:29:05] Web routing configuration ready (proxy rules applied).
+[10:29:07] Web server routing configured. Applying policies...
+[10:29:09] Web routing policies applied successfully.
+[10:29:09] Registering global edge network routing for api.uniinside.net...
+[10:29:14] Global edge network routing registered successfully.
+[10:29:14] Site deployed successfully!

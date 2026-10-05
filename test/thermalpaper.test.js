@@ -1,0 +1,1 @@
+thermalPaper.test.js

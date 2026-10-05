@@ -1,0 +1,1 @@
+kioskEndpointSmoke.test.js
