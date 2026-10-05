@@ -3,8 +3,23 @@ const dotenv = require('dotenv');
 // KroomBox runs this app from the monorepo root while server.js lives in
 // unismiles-backend/. Load the site-level .env explicitly before importing
 // clients that read PAYMENT_VISION_SERVICE_URL at module initialization.
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
-dotenv.config({ path: path.resolve(__dirname, '.env'), override: false });
+const siteEnv = dotenv.config({ path: path.resolve(__dirname, '../.env') });
+const appEnv = dotenv.config({ path: path.resolve(__dirname, '.env'), override: false });
+
+// Some hosting panels export known variables as empty strings. dotenv treats
+// those as already defined, so the local .env never fills them and mysql2
+// connects without a default database. Keep real panel values authoritative,
+// but fall back to the parsed files for empty DB settings.
+const dbEnvKeys = [
+  'DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASSWORD',
+  'DB_DATABASE', 'DB_USERNAME', 'DB_PASS',
+  'MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_DATABASE', 'MYSQL_USER', 'MYSQL_PASSWORD',
+];
+for (const key of dbEnvKeys) {
+  if (process.env[key]?.trim()) continue;
+  const fileValue = siteEnv.parsed?.[key] || appEnv.parsed?.[key];
+  if (fileValue?.trim()) process.env[key] = fileValue;
+}
 
 if (process.env.NODE_ENV === 'production') {
   if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {

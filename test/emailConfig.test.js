@@ -48,6 +48,14 @@ test('env dimuat dari dua berkas: root dulu, lalu lokal tanpa menimpa', () => {
     'env lokal harus dimuat setelahnya TANPA menimpa nilai yang sudah ada');
 });
 
+test('nilai DB dari berkas env mengisi variabel panel yang kosong', () => {
+  assert.match(server, /const dbEnvKeys = \[/);
+  assert.match(server, /if \(process\.env\[key\]\?\.trim\(\)\) continue/,
+    'nilai hosting yang terisi harus tetap diutamakan');
+  assert.match(server, /siteEnv\.parsed\?\.\[key\] \|\| appEnv\.parsed\?\.\[key\]/,
+    'nilai database dari berkas env harus mengisi variabel yang kosong');
+});
+
 test('IPv4 diprioritaskan agar SMTP tidak gagal karena IPv6', () => {
   // Gejala nyata: EHOSTUNREACH ke alamat IPv6 Gmail. Tanpa ini, pengiriman email
   // gagal di jaringan yang tidak punya rute IPv6.
