@@ -1,14 +1,26 @@
 const mysql = require('mysql2/promise');
 
-const dbPort = Number(process.env.DB_PORT) || 3306;
+// Hosting panels commonly expose Laravel-style DB_DATABASE/DB_USERNAME
+// variables, while this application historically used DB_NAME/DB_USER.
+// Accept both so a valid production environment does not connect without a
+// default schema merely because the panel uses the alternate names.
+const dbHost = process.env.DB_HOST || process.env.MYSQL_HOST;
+const dbPort = Number(process.env.DB_PORT || process.env.MYSQL_PORT) || 3306;
+const dbName = process.env.DB_NAME || process.env.DB_DATABASE || process.env.MYSQL_DATABASE;
+const dbUser = process.env.DB_USER || process.env.DB_USERNAME || process.env.MYSQL_USER;
+const dbPassword = process.env.DB_PASSWORD || process.env.DB_PASS || process.env.MYSQL_PASSWORD;
 
-console.log(`[Database] Connecting to MySQL at ${process.env.DB_HOST}:${dbPort}, database '${process.env.DB_NAME}'`);
+if (!dbHost || !dbName || !dbUser) {
+  console.error('[Database] Incomplete MySQL configuration. Set DB_HOST, DB_NAME, and DB_USER (or their documented aliases).');
+} else {
+  console.log(`[Database] Connecting to MySQL at ${dbHost}:${dbPort}, database '${dbName}'`);
+}
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: dbHost,
+  user: dbUser,
+  password: dbPassword,
+  database: dbName,
   port: dbPort,
   waitForConnections: true,
   connectionLimit: 10,
@@ -24,4 +36,3 @@ const pool = mysql.createPool({
 });
 
 module.exports = pool;
-
