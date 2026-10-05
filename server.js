@@ -110,7 +110,7 @@ app.use('/api/', apiLimiter);
 // (diluncurkan manual dari root monorepo, dengan .env yang salah) masih menahan
 // port 5017, sementara proses baru crash-loop dengan EADDRINUSE. Tanpa penanda
 // ini, mustahil membedakan "kode belum jalan" dari "kode jalan tapi masih salah".
-const BUILD_MARKER = 'unismiles-backend/verify-error-logging-1';
+const BUILD_MARKER = 'unismiles-backend/db-env-aliases-1';
 app.get('/api/v1/public/__build', (req, res) => {
   res.json({ build: BUILD_MARKER, pid: process.pid, cwd: process.cwd() });
 });
