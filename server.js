@@ -17,8 +17,9 @@ const dbEnvKeys = [
 ];
 for (const key of dbEnvKeys) {
   if (process.env[key]?.trim()) continue;
-  const fileValue = siteEnv.parsed?.[key] || appEnv.parsed?.[key];
-  if (fileValue?.trim()) process.env[key] = fileValue;
+  const fileValue = [siteEnv.parsed?.[key], appEnv.parsed?.[key]]
+    .find((value) => value?.trim());
+  if (fileValue) process.env[key] = fileValue;
 }
 
 if (process.env.NODE_ENV === 'production') {

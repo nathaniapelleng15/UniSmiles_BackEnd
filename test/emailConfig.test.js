@@ -52,8 +52,8 @@ test('nilai DB dari berkas env mengisi variabel panel yang kosong', () => {
   assert.match(server, /const dbEnvKeys = \[/);
   assert.match(server, /if \(process\.env\[key\]\?\.trim\(\)\) continue/,
     'nilai hosting yang terisi harus tetap diutamakan');
-  assert.match(server, /siteEnv\.parsed\?\.\[key\] \|\| appEnv\.parsed\?\.\[key\]/,
-    'nilai database dari berkas env harus mengisi variabel yang kosong');
+  assert.match(server, /\[siteEnv\.parsed\?\.\[key\], appEnv\.parsed\?\.\[key\]\][\s\S]*\.find\(\(value\) => value\?\.trim\(\)\)/,
+    'nilai kosong dari berkas site tidak boleh menghalangi nilai .env aplikasi');
 });
 
 test('IPv4 diprioritaskan agar SMTP tidak gagal karena IPv6', () => {
