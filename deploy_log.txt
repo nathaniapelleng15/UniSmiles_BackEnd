@@ -1,0 +1,406 @@
+  [RELEASE] Release ID: rel_1791172140875_f4iq7 | Mode: fullstack
+
+
+═══════════════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════════════
+
+
+[Stage 1/7: Trigger] Pipeline initiated manually from web console.
+
+  [TIME] Timestamp: 2026-10-05T03:49:01.156Z
+
+  [START] [CI/CD Pipeline Started] Site: uniinaisw-backend (api.uniinside.net)
+
+[Stage 2/7: Source] Fetching and pulling latest commits from Git remote...
+
+From https://github.com/nathaniapelleng15/UniSmiles_BackEnd
+ * branch            codex/test-push -> FETCH_HEAD
+Already up to date.
+
+[Stage 2/7: Source] HEAD is at commit [8a8f07f] Initial commit
+
+[Stage 3/7: Dependencies] Installing Node.js packages in ....
+
+Running npm install...
+
+
+up to date, audited 162 packages in 649ms
+
+
+
+27 packages are looking for funding
+  run `npm fund` for details
+
+
+
+found 0 vulnerabilities
+
+
+[Stage 3/7: Dependencies] Package dependencies successfully resolved.
+
+[Stage 4/7: Build] Executing build command: "npm run build"...
+
+npm install completed successfully (from cache).
+
+Running build command: npm run build...
+
+npm error Missing script: "build"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+
+
+npm error A complete log of this run can be found in: /var/services/homes/AslabKolab/.npm/_logs/2026-10-05T03_49_04_968Z-debug-0.log
+
+
+
+[ERROR] [CI/CD Pipeline Error] Build command failed with exit code 1: npm error Missing script: "build"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /var/services/homes/AslabKolab/.npm/_logs/2026-10-05T03_49_04_968Z-debug-0.log
+
+
+═══════════════════════════════════════════════════════════════════════
+
+  [START] [CI/CD Pipeline Started] Site: uniinaisw-backend (api.uniinside.net)
+
+  [TIME] Timestamp: 2026-10-05T03:49:38.242Z
+
+  [RELEASE] Release ID: rel_1791172177876_5xr0t | Mode: fullstack
+
+═══════════════════════════════════════════════════════════════════════
+
+
+[Stage 1/7: Trigger] Pipeline initiated manually from web console.
+
+[Stage 2/7: Source] Fetching and pulling latest commits from Git remote...
+
+From https://github.com/nathaniapelleng15/UniSmiles_BackEnd
+ * branch            codex/test-push -> FETCH_HEAD
+Already up to date.
+
+[Stage 2/7: Source] HEAD is at commit [8a8f07f] Initial commit
+
+[Stage 3/7: Dependencies] Installing Node.js packages in ....
+
+Running npm install...
+
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+
+
+up to date, audited 162 packages in 892ms
+
+27 packages are looking for funding
+
+
+npm install completed successfully (from cache).
+
+[Stage 3/7: Dependencies] Package dependencies successfully resolved.
+
+[Stage 4/7: Build] Executing build command: "npm run build"...
+
+Running build command: npm run build...
+
+npm error Missing script: "build"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+
+
+npm error A complete log of this run can be found in: /var/services/homes/AslabKolab/.npm/_logs/2026-10-05T03_49_42_254Z-debug-0.log
+
+
+
+[ERROR] [CI/CD Pipeline Error] Build command failed with exit code 1: npm error Missing script: "build"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /var/services/homes/AslabKolab/.npm/_logs/2026-10-05T03_49_42_254Z-debug-0.log
+
+  [START] [CI/CD Pipeline Started] Site: uniinaisw-backend (api.uniinside.net)
+
+
+═══════════════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════════════
+
+
+  [RELEASE] Release ID: rel_1791172190552_61o12 | Mode: fullstack
+
+[Stage 1/7: Trigger] Pipeline initiated manually from web console.
+
+  [TIME] Timestamp: 2026-10-05T03:49:50.830Z
+
+[Stage 2/7: Source] Fetching and pulling latest commits from Git remote...
+
+From https://github.com/nathaniapelleng15/UniSmiles_BackEnd
+ * branch            codex/test-push -> FETCH_HEAD
+Already up to date.
+
+[Stage 2/7: Source] HEAD is at commit [8a8f07f] Initial commit
+
+[Stage 3/7: Dependencies] Installing Node.js packages in ....
+
+Running npm install...
+
+
+up to date, audited 162 packages in 529ms
+
+
+
+27 packages are looking for funding
+  run `npm fund` for details
+
+
+
+found 0 vulnerabilities
+
+
+npm install completed successfully (from cache).
+
+[Stage 3/7: Dependencies] Package dependencies successfully resolved.
+
+[Stage 4/7: Build] Executing build command: "npm run build"...
+
+Running build command: npm run build...
+
+npm error Missing script: "build"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+
+
+npm error A complete log of this run can be found in: /var/services/homes/AslabKolab/.npm/_logs/2026-10-05T03_49_54_014Z-debug-0.log
+
+
+
+[ERROR] [CI/CD Pipeline Error] Build command failed with exit code 1: npm error Missing script: "build"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /var/services/homes/AslabKolab/.npm/_logs/2026-10-05T03_49_54_014Z-debug-0.log
+
+
+═══════════════════════════════════════════════════════════════════════
+
+  [START] [CI/CD Pipeline Started] Site: uniinaisw-backend (api.uniinside.net)
+
+  [RELEASE] Release ID: rel_1791172200948_b0bts | Mode: fullstack
+
+  [TIME] Timestamp: 2026-10-05T03:50:01.220Z
+
+═══════════════════════════════════════════════════════════════════════
+
+
+[Stage 1/7: Trigger] Pipeline initiated manually from web console.
+
+[Stage 2/7: Source] Fetching and pulling latest commits from Git remote...
+
+From https://github.com/nathaniapelleng15/UniSmiles_BackEnd
+ * branch            codex/test-push -> FETCH_HEAD
+Already up to date.
+
+[Stage 2/7: Source] HEAD is at commit [8a8f07f] Initial commit
+
+[Stage 3/7: Dependencies] Installing Node.js packages in ....
+
+Running npm install...
+
+
+up to date, audited 162 packages in 1s
+
+
+
+27 packages are looking for funding
+  run `npm fund` for details
+
+
+
+found 0 vulnerabilities
+
+
+npm install completed successfully (from cache).
+
+[Stage 3/7: Dependencies] Package dependencies successfully resolved.
+
+[Stage 4/7: Build] Executing build command: "npm run build"...
+
+Running build command: npm run build...
+
+npm error Missing script: "build"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+
+
+npm error A complete log of this run can be found in: /var/services/homes/AslabKolab/.npm/_logs/2026-10-05T03_50_05_343Z-debug-0.log
+
+
+
+[ERROR] [CI/CD Pipeline Error] Build command failed with exit code 1: npm error Missing script: "build"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /var/services/homes/AslabKolab/.npm/_logs/2026-10-05T03_50_05_343Z-debug-0.log
+
+
+═══════════════════════════════════════════════════════════════════════
+
+  [START] [CI/CD Pipeline Started] Site: uniinaisw-backend (api.uniinside.net)
+
+  [RELEASE] Release ID: rel_1791172332889_vlfmv | Mode: fullstack
+
+  [TIME] Timestamp: 2026-10-05T03:52:13.160Z
+
+[Stage 1/7: Trigger] Pipeline initiated manually from web console.
+
+═══════════════════════════════════════════════════════════════════════
+
+
+[Stage 2/7: Source] Fetching and pulling latest commits from Git remote...
+
+From https://github.com/nathaniapelleng15/UniSmiles_BackEnd
+ * branch            codex/test-push -> FETCH_HEAD
+Already up to date.
+
+[Stage 2/7: Source] HEAD is at commit [3527223] Add backend build script for CI
+
+[Stage 3/7: Dependencies] Installing Node.js packages in ....
+
+Running npm install...
+
+
+up to date, audited 162 packages in 674ms
+
+
+
+27 packages are looking for funding
+  run `npm fund` for details
+
+
+
+found 0 vulnerabilities
+
+
+npm install completed successfully (from cache).
+
+[Stage 3/7: Dependencies] Package dependencies successfully resolved.
+
+[Stage 4/7: Build] Executing build command: "npm run build"...
+
+Running build command: npm run build...
+
+
+> uni-smiles-backend-api@1.0.0 build
+> node --check server.js
+
+
+
+Build completed successfully.
+
+[Stage 6/7: Reload] Reloading PM2 process for uniinaisw-backend on port 5017...
+
+[Stage 5/7: Cascade] Site is standalone. Skipping cascade.
+
+[Stage 4/7: Build] Frontend compilation finished successfully.
+
+[Stage 6/7: Reload] PM2 process reloaded and online.
+
+[Stage 7/7: Health] Verifying application availability...
+
+[Stage 7/7: Health] Health check completed successfully!
+
+[Stage 7/7: Health] Local probe notification: connect ECONNREFUSED [cluster-worker]
+
+  [DURATION] Total Duration: 49s
+
+═══════════════════════════════════════════════════════════════════════
+
+
+
+═══════════════════════════════════════════════════════════════════════
+
+  [SUCCESS] [CI/CD Pipeline Succeeded] Release rel_1791172332889_vlfmv is now ACTIVE!
+
+
+═══════════════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════════════
+
+
+  [START] [CI/CD Pipeline Started] Site: uniinaisw-backend (api.uniinside.net)
+
+[Stage 1/7: Trigger] Pipeline initiated manually from web console.
+
+  [TIME] Timestamp: 2026-10-05T04:00:19.067Z
+
+  [RELEASE] Release ID: rel_1791172818807_cs5g3 | Mode: fullstack
+
+[Stage 2/7: Source] Fetching and pulling latest commits from Git remote...
+
+From https://github.com/nathaniapelleng15/UniSmiles_BackEnd
+ * branch            codex/test-push -> FETCH_HEAD
+Already up to date.
+
+[Stage 2/7: Source] HEAD is at commit [3527223] Add backend build script for CI
+
+Running npm install...
+
+[Stage 3/7: Dependencies] Installing Node.js packages in ....
+
+
+up to date, audited 162 packages in 718ms
+
+
+
+27 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+
+[Stage 3/7: Dependencies] Package dependencies successfully resolved.
+
+npm install completed successfully (from cache).
+
+[Stage 4/7: Build] Executing build command: "npm run build"...
+
+Running build command: npm run build...
+
+
+> uni-smiles-backend-api@1.0.0 build
+> node --check server.js
+
+
+
+Build completed successfully.
+
+[Stage 4/7: Build] Frontend compilation finished successfully.
+
+[Stage 5/7: Cascade] Site is standalone. Skipping cascade.
+
+[Stage 6/7: Reload] Reloading PM2 process for uniinaisw-backend on port 5017...
+
+[Stage 6/7: Reload] PM2 process reloaded and online.
+
+[Stage 7/7: Health] Verifying application availability...
+
+[Stage 7/7: Health] Local probe notification: connect ECONNREFUSED [cluster-worker]
+
+
+═══════════════════════════════════════════════════════════════════════
+
+[Stage 7/7: Health] Health check completed successfully!
+
+  [SUCCESS] [CI/CD Pipeline Succeeded] Release rel_1791172818807_cs5g3 is now ACTIVE!
+
+  [DURATION] Total Duration: 49s
+
+═══════════════════════════════════════════════════════════════════════
+
+
