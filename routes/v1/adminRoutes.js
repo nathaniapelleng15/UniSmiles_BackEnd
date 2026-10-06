@@ -9,8 +9,21 @@ const frameTemplateController = require('../../controllers/frameTemplateControll
 const sessionController = require('../../controllers/sessionController');
 const adminController = require('../../controllers/adminController');
 const authMiddleware = require('../../middlewares/authMiddleware');
+const gopayMerchantSessionController = require('../../controllers/gopayMerchantSessionController');
+const { createRateLimiter } = require('../../utils/security');
 
 router.use(verifyToken);
+
+router.post(
+  '/gopay-merchant/session-import',
+  authMiddleware.requireRole(['Super Admin']),
+  createRateLimiter({
+    windowMs: 60 * 60 * 1000,
+    max: 3,
+    keyGenerator: req => `gopay-session-import:${req.user?.id || req.ip}`,
+  }),
+  gopayMerchantSessionController.importSession
+);
 
 const systemSettingsController = require('../../controllers/systemSettingsController');
 

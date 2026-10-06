@@ -6,6 +6,7 @@ const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 const feed = require('../services/gopayMerchantFeed');
+const sessionImport = require('../services/gopayMerchantSessionImport');
 
 const jsonResponse = (payload, status = 200) => new Response(JSON.stringify(payload), {
   status,
@@ -60,6 +61,43 @@ test('GoPay sessions are written with private permissions and can be reloaded', 
     assert.equal(mode, 0o600);
     assert.equal((await fs.stat(directory)).mode & 0o777, 0o700);
   }
+});
+
+test('production session import is one-time, external, and stores no token in its marker', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'unismiles-gopay-import-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const sessionPath = path.join(directory, 'session.json');
+  const session = { access_token: 'secret-access-token', refresh_token: 'secret-refresh-token' };
+
+  await withEnv({
+    GOPAY_SESSION_IMPORT_ENABLED: 'true',
+    GOPAY_MERCHANT_SESSION_PATH: sessionPath,
+    GOPAY_POC_SESSION_PATH: undefined,
+  }, async () => {
+    assert.equal(await sessionImport.importSessionOnce(session), sessionPath);
+    assert.deepEqual(await feed.loadSession(sessionPath), session);
+
+    const marker = await fs.readFile(`${sessionPath}.imported-once`, 'utf8');
+    assert.equal(marker, 'imported\n');
+    assert.equal(marker.includes(session.access_token), false);
+    assert.equal(marker.includes(session.refresh_token), false);
+
+    await assert.rejects(sessionImport.importSessionOnce({
+      access_token: 'replacement-access', refresh_token: 'replacement-refresh',
+    }), error => error.code === 'SESSION_ALREADY_IMPORTED');
+    assert.deepEqual(await feed.loadSession(sessionPath), session);
+  });
+});
+
+test('production session import is closed unless the explicit feature flag is enabled', async () => {
+  await withEnv({
+    GOPAY_SESSION_IMPORT_ENABLED: undefined,
+    GOPAY_MERCHANT_SESSION_PATH: '/tmp/unismiles-gopay-import-disabled/session.json',
+  }, async () => {
+    await assert.rejects(sessionImport.importSessionOnce({
+      access_token: 'test-access-token', refresh_token: 'test-refresh-token',
+    }), error => error.code === 'IMPORT_DISABLED');
+  });
 });
 
 test('GoPay session files inside the repository are rejected', () => {
