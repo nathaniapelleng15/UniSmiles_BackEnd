@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 // unismiles-backend/. Load the site-level .env explicitly before importing
 // clients that read PAYMENT_VISION_SERVICE_URL at module initialization.
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
-dotenv.config({ path: path.resolve(__dirname, '.env'), override: false });
+dotenv.config({ path: path.resolve(__dirname, '.env'), override: true });
 
 if (process.env.NODE_ENV === 'production') {
   if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
@@ -150,7 +150,7 @@ app.use(errorHandler);
 
 // Default port mengikuti port runtime KroomBox untuk site ini, supaya nilai di
 // server tidak perlu diubah manual setiap kali deploy.
-const PORT = process.env.PORT || 5017;
+const PORT = process.env.PORT || 5031;
 const HOST = process.env.HOST || '0.0.0.0';
 server.listen(PORT, HOST, () => {
   console.log(`Uni-Smiles REST API & WebSocket Server is running on ${HOST}:${PORT}`);
