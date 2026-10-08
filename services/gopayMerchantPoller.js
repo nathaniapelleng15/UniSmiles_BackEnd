@@ -4,11 +4,8 @@ const feedAdapter = require('./gopayMerchantFeed');
 
 const PROVIDER = 'gopay_merchant';
 const SETTLED_STATUSES = new Set(['SETTLEMENT', 'CAPTURE']);
-let timer = null;
-let activePoll = false;
 let lockConnection = null;
 let lockName = null;
-let loggedLockOwner = false;
 
 const toUtcDateTime = value => {
   const date = value instanceof Date ? value : new Date(value);
@@ -73,14 +70,9 @@ const ensurePollerLock = async merchantId => {
     const [rows] = await candidate.query('SELECT GET_LOCK(?, 0) AS acquired', [lockName]);
     if (Number(rows[0]?.acquired) !== 1) {
       candidate.release();
-      if (!loggedLockOwner) {
-        console.log('[GoPay Merchant poller] Another backend instance owns this merchant poller.');
-        loggedLockOwner = true;
-      }
       return false;
     }
     lockConnection = candidate;
-    loggedLockOwner = false;
     return true;
   } catch (error) {
     candidate.release();
@@ -88,7 +80,18 @@ const ensurePollerLock = async merchantId => {
   }
 };
 
-const storeAndMatch = async (merchantId, transaction) => {
+const releasePollerLock = async () => {
+  if (!lockConnection) return;
+  const connection = lockConnection;
+  lockConnection = null;
+  try {
+    await connection.query('SELECT RELEASE_LOCK(?)', [lockName]);
+  } finally {
+    connection.release();
+  }
+};
+
+const storeAndMatch = async (merchantId, transaction, targetSessionId = null) => {
   const connection = await pool.getConnection();
   try {
     await connection.query("SET time_zone = '+00:00'");
@@ -143,6 +146,9 @@ const storeAndMatch = async (merchantId, transaction) => {
       return false;
     }
 
+    const sessionFilter = targetSessionId === null ? '' : ' AND r.session_id = ?';
+    const reservationParams = [merchantId, transaction.amount, PROVIDER];
+    if (targetSessionId !== null) reservationParams.push(targetSessionId);
     const [reservationRows] = await connection.query(
       `SELECT r.session_id, r.expires_at, s.started_at, s.payment_expires_at,
               s.payment_status, s.payment_provider, s.payment_required_amount
@@ -150,9 +156,9 @@ const storeAndMatch = async (merchantId, transaction) => {
        JOIN sessions s ON s.id = r.session_id
        WHERE r.merchant_id = ? AND r.expected_amount = ?
          AND r.status = 'reserved' AND r.expires_at > NOW(3)
-         AND s.payment_status = 'pending' AND s.payment_provider = ?
+         AND s.payment_status = 'pending' AND s.payment_provider = ?${sessionFilter}
        LIMIT 2 FOR UPDATE`,
-      [merchantId, transaction.amount, PROVIDER]
+      reservationParams
     );
 
     const paidAtMs = transaction.transactionTimeDate.getTime();
@@ -226,23 +232,29 @@ const storeAndMatch = async (merchantId, transaction) => {
   }
 };
 
-const expireReservations = async merchantId => {
+const expireReservations = async (merchantId, targetSessionId = null) => {
   const connection = await pool.getConnection();
   try {
     await connection.query("SET time_zone = '+00:00'");
     await connection.beginTransaction();
+    const sessionFilter = targetSessionId === null ? '' : ' AND r.session_id = ?';
+    const sessionParams = [merchantId, PROVIDER];
+    if (targetSessionId !== null) sessionParams.push(targetSessionId);
     await connection.query(
       `UPDATE sessions s
        JOIN payment_amount_reservations r ON r.session_id = s.id
        SET s.payment_status = 'expired'
        WHERE r.merchant_id = ? AND r.status = 'reserved' AND r.expires_at <= NOW(3)
-         AND s.payment_status = 'pending' AND s.payment_provider = ?`,
-      [merchantId, PROVIDER]
+         AND s.payment_status = 'pending' AND s.payment_provider = ?${sessionFilter}`,
+      sessionParams
     );
+    const reservationFilter = targetSessionId === null ? '' : ' AND session_id = ?';
+    const reservationParams = [merchantId];
+    if (targetSessionId !== null) reservationParams.push(targetSessionId);
     await connection.query(
       `UPDATE payment_amount_reservations SET status = 'expired'
-       WHERE merchant_id = ? AND status = 'reserved' AND expires_at <= NOW(3)`,
-      [merchantId]
+       WHERE merchant_id = ? AND status = 'reserved' AND expires_at <= NOW(3)${reservationFilter}`,
+      reservationParams
     );
     await connection.commit();
   } catch (error) {
@@ -253,62 +265,59 @@ const expireReservations = async merchantId => {
   }
 };
 
-const pollOnce = async (config = feedAdapter.readConfig()) => {
-  if (!config.enabled || activePoll) return { observed: 0, matched: 0 };
-  activePoll = true;
-  try {
-    await expireReservations(config.merchantId);
-    const feed = await feedAdapter.fetchTransactions(config);
-    const observedAt = toUtcDateTime(new Date());
-    let observed = 0;
-    let matched = 0;
-    for (const item of feed.transactions) {
-      const normalized = normalizeTransaction(item, observedAt);
-      if (!normalized) continue;
-      observed += 1;
-      if (await storeAndMatch(config.merchantId, normalized)) matched += 1;
-    }
-    return { observed, matched };
-  } finally {
-    activePoll = false;
+const pollOnce = async (config, targetSessionId) => {
+  await expireReservations(config.merchantId, targetSessionId);
+  const feed = await feedAdapter.fetchTransactions(config);
+  const observedAt = toUtcDateTime(new Date());
+  let observed = 0;
+  let matched = 0;
+  for (const item of feed.transactions) {
+    const normalized = normalizeTransaction(item, observedAt);
+    if (!normalized) continue;
+    observed += 1;
+    if (await storeAndMatch(config.merchantId, normalized, targetSessionId)) matched += 1;
   }
+  return { observed, matched };
 };
 
-const start = () => {
+const checkSessionOnce = async sessionCode => {
+  const normalizedCode = String(sessionCode || '').trim();
+  if (!normalizedCode) throw Object.assign(new Error('Session code is required.'), { code: 'SESSION_CODE_REQUIRED' });
+
   const config = feedAdapter.readConfig();
-  if (!config.enabled || timer) return false;
+  if (!config.enabled) throw Object.assign(new Error('GoPay Merchant is disabled.'), { code: 'GOPAY_DISABLED' });
 
-  console.log(`[GoPay Merchant poller] Enabled; interval ${config.intervalMs} ms.`);
-  const run = async () => {
-    try {
-      if (!await ensurePollerLock(config.merchantId)) return;
-      const result = await pollOnce(config);
-      if (result.matched > 0) {
-        console.log(`[GoPay Merchant poller] ${result.matched} payment session(s) verified.`);
-      }
-    } catch (error) {
-      const code = error.code || error.name || 'poll_error';
-      console.error(`[GoPay Merchant poller] Poll failed (${String(code).slice(0, 40)}).`);
-    }
-  };
-
-  void run();
-  timer = setInterval(run, config.intervalMs);
-  return true;
-};
-
-const stop = () => {
-  const wasRunning = Boolean(timer);
-  if (timer) clearInterval(timer);
-  timer = null;
-  if (lockConnection) {
-    const connection = lockConnection;
-    lockConnection = null;
-    void connection.query('SELECT RELEASE_LOCK(?)', [lockName])
-      .catch(() => {})
-      .finally(() => connection.release());
+  const [sessions] = await pool.query(
+    `SELECT id, session_code, payment_status, payment_provider
+     FROM sessions WHERE session_code = ? LIMIT 1`,
+    [normalizedCode]
+  );
+  const session = sessions[0];
+  if (!session) throw Object.assign(new Error('Session not found.'), { code: 'SESSION_NOT_FOUND' });
+  if (session.payment_provider !== PROVIDER) {
+    throw Object.assign(new Error('Session is not configured for GoPay Merchant.'), { code: 'WRONG_PROVIDER' });
   }
-  return wasRunning;
+  if (session.payment_status !== 'pending') {
+    return { sessionCode: session.session_code, paymentStatus: session.payment_status, observed: 0, matched: 0 };
+  }
+  if (!await ensurePollerLock(config.merchantId)) {
+    throw Object.assign(new Error('Another GoPay check is already running.'), { code: 'CHECK_ALREADY_RUNNING' });
+  }
+
+  try {
+    const result = await pollOnce(config, session.id);
+    const [updatedSessions] = await pool.query(
+      'SELECT payment_status FROM sessions WHERE id = ? LIMIT 1',
+      [session.id]
+    );
+    return {
+      sessionCode: session.session_code,
+      paymentStatus: updatedSessions[0]?.payment_status || session.payment_status,
+      ...result,
+    };
+  } finally {
+    await releasePollerLock();
+  }
 };
 
-module.exports = { start, stop, pollOnce };
+module.exports = { checkSessionOnce };

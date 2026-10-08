@@ -18,12 +18,7 @@ const readConfig = () => {
     throw new Error('GoPay Merchant is enabled but its merchant ID, Python path, or external session path is missing.');
   }
 
-  const intervalMs = Number(process.env.GOPAY_MERCHANT_POLL_INTERVAL_MS) || 10000;
-  if (intervalMs < 10000) {
-    throw new Error('GoPay Merchant polling interval must be at least 10000 ms.');
-  }
-
-  return { enabled, merchantId, python, sessionPath, intervalMs };
+  return { enabled, merchantId, python, sessionPath };
 };
 
 const fetchTransactions = async (config = readConfig()) => {

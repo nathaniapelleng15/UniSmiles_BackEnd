@@ -29,11 +29,9 @@ const cors = require('cors');
 const { initSocketServer } = require('./utils/socketServer');
 const { corsOrigin, requestId, createRateLimiter } = require('./utils/security');
 const cleanupService = require('./services/cleanupService');
-const gopayMerchantPoller = require('./services/gopayMerchantPoller');
 
-// Start background cron jobs
+// Keep unrelated background cleanup; GoPay checks run only on an explicit CLI command.
 cleanupService.start();
-gopayMerchantPoller.start();
 
 const publicRoutes = require('./routes/v1/publicRoutes');
 const kioskRoutes = require('./routes/v1/kioskRoutes');
