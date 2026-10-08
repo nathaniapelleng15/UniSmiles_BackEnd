@@ -1,9 +1,5 @@
 const pool = require('../config/db');
 
-// The SQL dump used by the project calls this column `name`, while some
-// environments were created from an earlier schema that called it
-// `full_name`. Resolve the actual column once and alias it to the API's
-// stable `full_name` property.
 let nameColumnPromise;
 
 async function getNameColumn() {
@@ -17,30 +13,30 @@ async function getNameColumn() {
         ORDER BY FIELD(COLUMN_NAME, 'name', 'full_name')
         LIMIT 1`
     ).then(([rows]) => {
-      if (!rows[0]) {
-        throw new Error("The users table must contain either a 'name' or 'full_name' column");
-      }
+      if (!rows[0]) throw new Error("The users table must contain either a 'name' or 'full_name' column");
       return rows[0].COLUMN_NAME;
-    }).catch((err) => {
+    }).catch(error => {
       nameColumnPromise = null;
-      throw err;
+      throw error;
     });
   }
-
   return nameColumnPromise;
 }
 
 function quoteIdentifier(identifier) {
-  // Only values returned from the allow-listed information_schema query reach
-  // this function, but keep the escaping explicit for clarity and safety.
   return `\`${identifier.replace(/`/g, '``')}\``;
+}
+
+function jsonValue(value) {
+  return Array.isArray(value) ? JSON.stringify(value) : value;
 }
 
 const User = {
   async findByEmail(email) {
     const nameColumn = quoteIdentifier(await getNameColumn());
     const [rows] = await pool.query(
-      `SELECT id, ${nameColumn} AS full_name, email, password_hash, role, partner_name, status, created_at, updated_at
+      `SELECT id, ${nameColumn} AS full_name, email, password_hash, role, partner_name,
+              assigned_kiosks, status, created_at, updated_at
          FROM users WHERE email = ? LIMIT 1`,
       [email]
     );
@@ -50,7 +46,8 @@ const User = {
   async findById(id) {
     const nameColumn = quoteIdentifier(await getNameColumn());
     const [rows] = await pool.query(
-      `SELECT id, ${nameColumn} AS full_name, email, password_hash, role, partner_name, status, created_at, updated_at
+      `SELECT id, ${nameColumn} AS full_name, email, password_hash, role, partner_name,
+              assigned_kiosks, status, created_at, updated_at
          FROM users WHERE id = ? LIMIT 1`,
       [id]
     );
@@ -60,7 +57,8 @@ const User = {
   async getUserById(id) {
     const nameColumn = quoteIdentifier(await getNameColumn());
     const [rows] = await pool.query(
-      `SELECT id, ${nameColumn} AS full_name, email, role, partner_name, status, created_at, updated_at
+      `SELECT id, ${nameColumn} AS full_name, email, role, partner_name,
+              assigned_kiosks, service_mode, status, notes, created_at, updated_at
          FROM users WHERE id = ? LIMIT 1`,
       [id]
     );
@@ -70,41 +68,63 @@ const User = {
   async getAllUsers() {
     const nameColumn = quoteIdentifier(await getNameColumn());
     const [rows] = await pool.query(
-      `SELECT id, ${nameColumn} AS full_name, email, role, partner_name, status, created_at, updated_at
+      `SELECT id, ${nameColumn} AS full_name, email, role, partner_name,
+              assigned_kiosks, service_mode, status, notes, created_at, updated_at
          FROM users ORDER BY created_at DESC`
     );
     return rows;
   },
 
   async create(userData) {
-    const { full_name, name, email, password_hash, role, partner_name } = userData;
-    const nameToUse = full_name || name;
     const nameColumn = quoteIdentifier(await getNameColumn());
     const [result] = await pool.query(
-      `INSERT INTO users (${nameColumn}, email, password_hash, role, partner_name) VALUES (?, ?, ?, ?, ?)`,
-      [nameToUse, email, password_hash, role, partner_name || null]
+      `INSERT INTO users (${nameColumn}, email, password_hash, role, partner_name, assigned_kiosks, service_mode, status, notes)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        userData.full_name || userData.name,
+        userData.email,
+        userData.password_hash,
+        userData.role,
+        userData.partner_name || null,
+        JSON.stringify(userData.assigned_kiosks || []),
+        userData.service_mode || 'Self-managed',
+        userData.status || 'Active',
+        userData.notes || '',
+      ]
     );
     return result;
   },
 
   async updateUser(id, userData) {
-    const { full_name, name, email, role, partner_name } = userData;
-    const nameToUse = full_name || name;
-    const nameColumn = quoteIdentifier(await getNameColumn());
+    const nameColumn = await getNameColumn();
+    const columns = {
+      full_name: nameColumn,
+      name: nameColumn,
+      email: 'email',
+      role: 'role',
+      partner_name: 'partner_name',
+      assigned_kiosks: 'assigned_kiosks',
+      service_mode: 'service_mode',
+      status: 'status',
+      notes: 'notes',
+    };
+    const updates = Object.entries(userData)
+      .filter(([key]) => Object.hasOwn(columns, key))
+      .map(([key, value]) => [quoteIdentifier(columns[key]), jsonValue(value)]);
+    if (!updates.length) return { affectedRows: 0 };
     const [result] = await pool.query(
-      `UPDATE users SET ${nameColumn} = ?, email = ?, role = ?, partner_name = ? WHERE id = ?`,
-      [nameToUse, email, role, partner_name || null, id]
+      `UPDATE users SET ${updates.map(([column]) => `${column} = ?`).join(', ')} WHERE id = ?`,
+      [...updates.map(([, value]) => value), id]
     );
     return result;
   },
 
   async deleteUser(id) {
-    const [result] = await pool.query("DELETE FROM users WHERE id = ?", [id]);
+    const [result] = await pool.query('DELETE FROM users WHERE id = ?', [id]);
     return result;
-  }
+  },
 };
 
-// Aliases for compatibility
 User.findUserByEmail = User.findByEmail;
 User.getNameColumn = getNameColumn;
 

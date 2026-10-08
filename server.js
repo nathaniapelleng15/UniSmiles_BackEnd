@@ -40,6 +40,7 @@ const kioskRoutes = require('./routes/v1/kioskRoutes');
 const adminRoutes = require('./routes/v1/adminRoutes');
 const assetRoutes = require('./routes/v1/assetRoutes');
 const authRoutes = require('./routes/v1/authRoutes');
+const filterController = require('./controllers/filterController');
 const { errorHandler, notFoundHandler } = require('./middlewares/errorHandler');
 
 const app = express();
@@ -129,6 +130,8 @@ app.use('/api/v1/kiosk', kioskRoutes);
 app.use('/api/v1/admin/assets', assetRoutes);
 // Router terpisah supaya upload aset punya validasi PNG yang lebih ketat.
 app.use('/api/v1/admin', adminRoutes);
+// Public read-only filter catalog for the photobooth kiosk.
+app.get('/api/filters', filterController.getAllActiveFilters);
 app.get('/api/kiosk-status', (req, res) => {
   res.status(200).json({
     success: true,

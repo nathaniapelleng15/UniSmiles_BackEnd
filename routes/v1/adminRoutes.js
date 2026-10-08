@@ -9,6 +9,8 @@ const frameTemplateController = require('../../controllers/frameTemplateControll
 const sessionController = require('../../controllers/sessionController');
 const adminController = require('../../controllers/adminController');
 const authMiddleware = require('../../middlewares/authMiddleware');
+const userRoutes = require('./userRoutes');
+const filterRoutes = require('./filterRoutes');
 
 router.use(verifyToken);
 
@@ -56,6 +58,9 @@ router.get('/payment-verifications/attempts', PaymentVerificationController.getA
 router.get('/payment-verifications/vision-health', PaymentVerificationController.visionHealth);
 router.get('/payment-verifications/attempts/:attempt_id/evidence', PaymentVerificationController.getEvidenceFile);
 router.post('/payment-verifications/attempts/:attempt_id/override', PaymentVerificationController.overridePayment);
+
+router.use('/users', authMiddleware.requireRole(['Super Admin']), userRoutes);
+router.use('/filters', authMiddleware.requireRole(['Super Admin']), filterRoutes);
 
 // Endpoint: POST /api/v1/admin/admin-mitra
 router.post(

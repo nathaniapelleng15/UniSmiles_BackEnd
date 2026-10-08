@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` ENUM('Super Admin','Admin Mitra','Klien') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Admin Mitra',
   `partner_name` VARCHAR(100) COLLATE utf8mb4_unicode_ci DEFAULT 'All Partners',
   `assigned_kiosks` JSON DEFAULT NULL COMMENT 'Array ID kiosk, contoh: ["K-001", "K-002"]',
+  `service_mode` VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Self-managed',
+  `notes` TEXT COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` VARCHAR(50) COLLATE utf8mb4_unicode_ci DEFAULT 'Active',
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -286,8 +288,10 @@ CREATE TABLE IF NOT EXISTS `photos` (
 CREATE TABLE IF NOT EXISTS `filters` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` TEXT COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` VARCHAR(50) COLLATE utf8mb4_unicode_ci DEFAULT 'color' COMMENT 'color, overlay, sticker',
   `preview_url` VARCHAR(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `css_filter` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'none',
   `is_active` TINYINT(1) DEFAULT '1',
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
